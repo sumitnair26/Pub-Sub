@@ -23,10 +23,11 @@ export class PubSubManager {
             this.subscriptions.set(stock, []);
         }
         this.subscriptions.get(stock)?.push(userId);
-        if (this.subscriptions.get(stock)?.length===1) {
-            this.redisClient.subscribe(stock, (message)=>{
-                this.handleMessage(stock, message)
-            })
+        if (this.subscriptions.get(stock)?.length === 1) {
+            this.redisClient.subscribe(stock, (message) => {
+                this.handleMessage(stock, message);
+            });
+            console.log(`Subscribed to Redis channel: ${stock}`);
         }
     }
 

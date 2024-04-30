@@ -20,30 +20,30 @@ class PubSubManager {
     }
     // The static method that controls the access to the singleton instance
     static getInstance() {
-        console.log('get Instance');
         if (!PubSubManager.instance) {
             PubSubManager.instance = new PubSubManager();
         }
         return PubSubManager.instance;
     }
     userSubscribe(userId, stock) {
-        var _a, _b;
-        console.log("User Subscribe");
+        var _a, _b, _c;
         if (!this.subscriptions.has(stock)) {
-            console.log(`First time came here ${stock}`);
             this.subscriptions.set(stock, []);
         }
         (_a = this.subscriptions.get(stock)) === null || _a === void 0 ? void 0 : _a.push(userId);
-        if (((_b = this.subscriptions.get(stock)) === null || _b === void 0 ? void 0 : _b.length) === 1) {
-            console.log(`came inside if ${stock}`);
+        console.log(this.subscriptions.get(stock));
+        console.log((_b = this.subscriptions.get(stock)) === null || _b === void 0 ? void 0 : _b.length);
+        if (((_c = this.subscriptions.get(stock)) === null || _c === void 0 ? void 0 : _c.length) === 1) {
             this.redisClient.subscribe(stock, (message) => {
                 this.handleMessage(stock, message);
             });
+            console.log(`Subscribed to Redis channel: ${stock}`);
         }
     }
     // Define the method that will be called when a message is published to the subscribed channel
     handleMessage(stock, message) {
         var _a;
+        console.log('Hereee');
         console.log(`Message received on channel ${stock}: ${message}`);
         (_a = this.subscriptions.get(stock)) === null || _a === void 0 ? void 0 : _a.forEach((sub) => {
             console.log(`Sending message to user: ${sub}`);
