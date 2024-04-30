@@ -13,9 +13,9 @@ export class PubSubManager {
     // The static method that controls the access to the singleton instance
     public static getInstance(): PubSubManager {
         if(!PubSubManager.instance){
-            PubSubManager.instance = new PubSubManager()
+            PubSubManager.instance = new PubSubManager();
         }
-        return PubSubManager.instance
+        return PubSubManager.instance;
     }
 
     userSubscribe(userId:string, stock:string){
